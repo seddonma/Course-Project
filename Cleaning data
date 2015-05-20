@@ -4,22 +4,27 @@ run_analysis <- function()
   features$V1 <- NULL
   features <- t(features)
   colnames(features)[1] <- "subjectID"
-  ## convert to list
-
+  unlist(features[1, ], use.names = FALSE)
 
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/train")
-  trainlabels <- read.table("subject_train.txt")
+  subjectID <- read.table("subject_train.txt")
   trainDS <- read.table("X_train")
-  ## Create table with "subjectID" column from trainlabels, then merge with trainDS  
-
+  subjectTD <- t(subjectID)
+  trainDS$subjectID <- subjectID
+  ## Create table with "subjectID" column from subjectID, then merge with testDS
 
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/test")
-  testlabels <- read.table("subject_train.txt")
+  subjectID <- read.table("subject_train.txt")
   testDS <- read.table("X_test.txt")
-  ## Create table with "subjectID" column from trainlabels, then merge with testDS
+  testDS$subjectID <- subjectID
+  ## Create table with "subjectID" column from subjectID, then merge with testDS
 
-  ## merge trainDS and testDS with suject ID as identifier
+  dataset <- rbind(trainDS, testDS)
+  ## merge trainDS and testDS with subjectID as identifier
 
+
+  tmp1 <- grep(pattern="-std()",x=tmp_vector)
+  tmp2 <- grep(pattern="-mean()",x=tmp_vector)
   ## drop everything except for mean and std measurements, make sure to drop this in label list and merged dataset
 
   ## rename activities (use a loop and colnames) should be first row, not variable names
