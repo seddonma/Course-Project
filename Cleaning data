@@ -1,0 +1,27 @@
+run_analysis <- function()
+  setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset")
+  features <- read.table("features.txt")   
+  features$V1 <- NULL
+  features <- t(features)
+  colnames(features)[1] <- "subjectID"
+  ## convert to list
+
+
+  setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/train")
+  trainlabels <- read.table("subject_train.txt")
+  trainDS <- read.table("X_train")
+  ## Create table with "subjectID" column from trainlabels, then merge with trainDS  
+
+
+  setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/test")
+  testlabels <- read.table("subject_train.txt")
+  testDS <- read.table("X_test.txt")
+  ## Create table with "subjectID" column from trainlabels, then merge with testDS
+
+  ## merge trainDS and testDS with suject ID as identifier
+
+  ## drop everything except for mean and std measurements, make sure to drop this in label list and merged dataset
+
+  ## rename activities (use a loop and colnames) should be first row, not variable names
+
+  ## rename actual variable names
