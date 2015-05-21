@@ -24,7 +24,7 @@ run_analysis <- function()
 ##1. Go by hand and drop all those that are not mean and std
 ##2. loop through row, drop column if row 1 does not contain "-std()" or "-mean()"
   for 
-
+or greap http://stackoverflow.com/questions/13043928/selecting-rows-where-a-column-has-a-string-like-hsa-partial-string-match 
   dataset <- rbind(trainDS, testDS)
   ## merge trainDS and testDS with subjectID as identifier
 
