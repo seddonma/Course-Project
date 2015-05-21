@@ -18,6 +18,12 @@ run_analysis <- function()
   testDS <- read.table("X_test.txt")
   testDS$subjectID <- subjectID
   ## Create table with "subjectID" column from subjectID, then merge with testDS
+  
+  
+##2 ways to get rid of all but mean and std columns
+##1. Go by hand and drop all those that are not mean and std
+##2. loop through row, drop column if row 1 does not contain "-std()" or "-mean()"
+  for 
 
   dataset <- rbind(trainDS, testDS)
   ## merge trainDS and testDS with subjectID as identifier
@@ -25,6 +31,7 @@ run_analysis <- function()
 
   tmp1 <- grep(pattern="-std()",x=tmp_vector)
   tmp2 <- grep(pattern="-mean()",x=tmp_vector)
+  tmp_vector is a vector of the data frame resulting from using read.csv function on the features.txt file 
   ## drop everything except for mean and std measurements, make sure to drop this in label list and merged dataset
 
   ## rename activities (use a loop and colnames) should be first row, not variable names
