@@ -3,37 +3,47 @@ run_analysis <- function()
   features <- read.table("features.txt")   
   features$V1 <- NULL
   features <- t(features)
-  colnames(features)[1] <- "subjectID"
-  unlist(features[1, ], use.names = FALSE)
-
+  ##colnames(features)[1] <- "subjectID"
+  ##unlist(features[1, ], use.names = FALSE)
+  
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/train")
-  subjectID <- read.table("subject_train.txt")
-  trainDS <- read.table("X_train")
-  subjectTD <- t(subjectID)
-  trainDS$subjectID <- subjectID
-  ## Create table with "subjectID" column from subjectID, then merge with testDS
+  trainDS <- read.table("X_train.txt") 
+  train_activities <- read.table("y_train.txt")
+  subjectID1 <- read.table("subject_train.txt")   
 
+  trainDS <- cbind(train_activities, trainDS)
+  colnames(trainDS)[1] <- "Activities"
+  trainDS <- cbind(subjectID1, trainDS)
+  colnames(trainDS)[1] <- "SubjectID"
+  ## Create table with "subjectID" column from subjectID, then merge with trainDS
+  
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/test")
-  subjectID <- read.table("subject_train.txt")
   testDS <- read.table("X_test.txt")
-  testDS$subjectID <- subjectID
+  test_activities <- read.table("y_test.txt")
+  subjectID2 <- read.table("subject_test.txt")    
+
+  testDS <- cbind(test_activities, testDS)
+  colnames(testDS)[1] <- "Activities"
+  testDS <- cbind(subjectID2, testDS)
+  colnames(testDS)[1] <- "SubjectID"
   ## Create table with "subjectID" column from subjectID, then merge with testDS
-  
-  
-##2 ways to get rid of all but mean and std columns
-##1. Go by hand and drop all those that are not mean and std
-##2. loop through row, drop column if row 1 does not contain "-std()" or "-mean()"
-  for 
-or greap http://stackoverflow.com/questions/13043928/selecting-rows-where-a-column-has-a-string-like-hsa-partial-string-match 
-  dataset <- rbind(trainDS, testDS)
+
+  dataset <- rbind(testDS, trainDS)
+
+  ##2 ways to get rid of all but mean and std columns
+  ##1. Go by hand and drop all those that are not mean and std
+  ##2. loop through row, drop column if row 1 does not contain "-std()" or "-mean()"
+  ##for 
+  ##or greap http://stackoverflow.com/questions/13043928/selecting-rows-where-a-column-has-a-string-like-hsa-partial-string-match 
+  ##dataset <- rbind(trainDS, testDS)
   ## merge trainDS and testDS with subjectID as identifier
-
-
-  tmp1 <- grep(pattern="-std()",x=tmp_vector)
-  tmp2 <- grep(pattern="-mean()",x=tmp_vector)
-  tmp_vector is a vector of the data frame resulting from using read.csv function on the features.txt file 
+  
+  
+  ## tmp1 <- grep(pattern="-std()",x=tmp_vector)
+  ## tmp2 <- grep(pattern="-mean()",x=tmp_vector)
+  ##tmp_vector is a vector of the data frame resulting from using read.csv function on the features.txt file 
   ## drop everything except for mean and std measurements, make sure to drop this in label list and merged dataset
-
+  
   ## rename activities (use a loop and colnames) should be first row, not variable names
-
+  
   ## rename actual variable names
