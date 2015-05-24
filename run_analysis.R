@@ -12,7 +12,7 @@ subjectID1 <- read.table("subject_train.txt")
 
 ## Binds the subjects activities with the subjects measurements, the binds the subject's IDs with the training dataset. 
 trainDS <- cbind(train_activities, trainDS)
-colnames(trainDS)[1] <- "Activities"
+colnames(trainDS)[1] <- "Activity"
 trainDS <- cbind(subjectID1, trainDS)
 colnames(trainDS)[1] <- "SubjectID"
 
@@ -24,7 +24,7 @@ subjectID2 <- read.table("subject_test.txt")
 
 ## Binds the subjects activities with the subjects measurements, the binds the subject's IDs with the testing dataset. Also renames the columns to the rational labels.
 testDS <- cbind(test_activities, testDS)
-colnames(testDS)[1] <- "Activities"
+colnames(testDS)[1] <- "Activity"
 testDS <- cbind(subjectID2, testDS)
 colnames(testDS)[1] <- "SubjectID"
 
@@ -38,15 +38,15 @@ names(dataset)[3:563]<- c(features)
 dataset <- dataset[ , c(1,2, grep("-mean()", colnames(dataset)), grep("-std()", colnames(dataset)))]
   
 ## Renames the descriptive activity names from numbers to names (step 3).
-dataset$Activities[dataset$Activities == 1] = 'WALKING'
-dataset$Activities[dataset$Activities == 2] = 'WALKING_UPSTAIRS'
-dataset$Activities[dataset$Activities == 3] = 'WALKING_DOWNSTAIRS'
-dataset$Activities[dataset$Activities == 4] = 'SITTING'
-dataset$Activities[dataset$Activities == 5] = 'STANDING'
-dataset$Activities[dataset$Activities == 6] = 'LAYING'
+dataset$Activity[dataset$Activity == 1] = 'WALKING'
+dataset$Activity[dataset$Activity == 2] = 'WALKING_UPSTAIRS'
+dataset$Activity[dataset$Activity == 3] = 'WALKING_DOWNSTAIRS'
+dataset$Activity[dataset$Activity == 4] = 'SITTING'
+dataset$Activity[dataset$Activity == 5] = 'STANDING'
+dataset$Activity[dataset$Activity == 6] = 'LAYING'
 
 ## Creates a second, independent tidy data set with the average of each variable for each activity and each subject (step 5). The dataset is named tidy_dataset.txt. 
 library(plyr)
-dataset1 <- ddply(dataset, c("SubjectID", "Activities"), numcolwise(mean))
+dataset1 <- ddply(dataset, c("SubjectID", "Activity"), numcolwise(mean))
 setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset")
 write.table(tidy_dataset, "tidy_dataset.txt")
