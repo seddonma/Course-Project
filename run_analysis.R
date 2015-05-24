@@ -47,6 +47,6 @@ dataset$Activity[dataset$Activity == 6] = 'LAYING'
 
 ## Creates a second, independent tidy data set with the average of each variable for each activity and each subject (step 5). The dataset is named tidy_dataset.txt. 
 library(plyr)
-dataset1 <- ddply(dataset, c("SubjectID", "Activity"), numcolwise(mean))
+tidy_dataset <- ddply(dataset, c("SubjectID", "Activity"), numcolwise(mean))
 setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset")
 write.table(tidy_dataset, "tidy_dataset.txt")
