@@ -122,3 +122,6 @@ fBodyBodyGyroJerkMag-std()
 
 4. Mean
 This section pertains only to the tiny_dataset.txt dataset. The mean have the same names as the Measurements section, but instead are the mean for each subject and activity the subject performed.  
+
+# Transformations performed on the dataset
+The raw data is first pulled from the system's memory and read, with some modifications including transposing in order to maintain consistance across the training and testing datasets. The training and testing datasets are binded with the subject IDs and their activities independently , and then the two datasets are bound together. The columns are then named appropriately using the features.txt file enclosed in the downloaded data. Then, as per the assignment instructions, all measurements that do not represent a mean or standard deviation are dropped. Following this step, the activity labels are renamed from numbers to the corresponding descriptive strings. Finally, the new tidy data set is created by displaying the mean of each measurement for each subject ID and activity. The dataset is then exported as a text file to the main directory where the downloaded dataset’s README resides. 
