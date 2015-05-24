@@ -1,49 +1,50 @@
 run_analysis <- function()
+  ## Reads the features.txt file that lists the subjects' measurement labels. The resulting data frame has the empty column. removed and is tranposed to match the following datasets. 
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset")
   features <- read.table("features.txt")   
   features$V1 <- NULL
   features <- t(features)
-  ##colnames(features)[1] <- "subjectID"
-  ##unlist(features[1, ], use.names = FALSE)
   
+  ## Reads the training datasets.
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/train")
   trainDS <- read.table("X_train.txt") 
   train_activities <- read.table("y_train.txt")
   subjectID1 <- read.table("subject_train.txt")   
 
+  ## Binds the subjects activities with the subjects measurements, the binds the subject's IDs with the training dataset. 
   trainDS <- cbind(train_activities, trainDS)
   colnames(trainDS)[1] <- "Activities"
   trainDS <- cbind(subjectID1, trainDS)
   colnames(trainDS)[1] <- "SubjectID"
-  ## Create table with "subjectID" column from subjectID, then merge with trainDS
   
+   ## Reads the testing datasets.
   setwd("C:/Users/Matt/Documents/Data Science Specialization/3. Getting and Cleaning Data/UCI HAR Dataset/test")
   testDS <- read.table("X_test.txt")
   test_activities <- read.table("y_test.txt")
   subjectID2 <- read.table("subject_test.txt")    
 
+   ## Binds the subjects activities with the subjects measurements, the binds the subject's IDs with the testing dataset. Also renames the columns to the rational labels.
   testDS <- cbind(test_activities, testDS)
   colnames(testDS)[1] <- "Activities"
   testDS <- cbind(subjectID2, testDS)
   colnames(testDS)[1] <- "SubjectID"
-  ## Create table with "subjectID" column from subjectID, then merge with testDS
 
+  ## Binds the training and datasets (step 1).
   dataset <- rbind(testDS, trainDS)
+  
+  ## Labels the data set with descriptive variable names (step 4).
+  names(dataset)[3:563]<- c(features)
 
-  ##2 ways to get rid of all but mean and std columns
-  ##1. Go by hand and drop all those that are not mean and std
-  ##2. loop through row, drop column if row 1 does not contain "-std()" or "-mean()"
-  ##for 
-  ##or greap http://stackoverflow.com/questions/13043928/selecting-rows-where-a-column-has-a-string-like-hsa-partial-string-match 
-  ##dataset <- rbind(trainDS, testDS)
-  ## merge trainDS and testDS with subjectID as identifier
+  ## Extracts only the measurements on the mean and standard deviation for each measurement. It was assumed that the only measurements that are a mean contain "-mean()" and those that are a standard deviation contain "-std()" (step 2).
+  dataset <- dataset[ , c(1,2, grep("-mean()", colnames(dataset)), grep("-std()", colnames(dataset)))]
   
+  ## Renames the descriptive activity names from numbers to names (step 3).
+  dataset$Activities[dataset$Activities == 1] = 'WALKING'
+  dataset$Activities[dataset$Activities == 2] = 'WALKING_UPSTAIRS'
+  dataset$Activities[dataset$Activities == 3] = 'WALKING_DOWNSTAIRS'
+  dataset$Activities[dataset$Activities == 4] = 'SITTING'
+  dataset$Activities[dataset$Activities == 5] = 'STANDING'
+  dataset$Activities[dataset$Activities == 6] = 'LAYING'
   
-  ## tmp1 <- grep(pattern="-std()",x=tmp_vector)
-  ## tmp2 <- grep(pattern="-mean()",x=tmp_vector)
-  ##tmp_vector is a vector of the data frame resulting from using read.csv function on the features.txt file 
-  ## drop everything except for mean and std measurements, make sure to drop this in label list and merged dataset
-  
-  ## rename activities (use a loop and colnames) should be first row, not variable names
-  
-  ## rename actual variable names
+  ## Creates a second, independent tidy data set with the average of each variable for each activity and each subject (step 5). 
+  dataset1 <- ddply(dataset, c("SubjectID", "Activities"), numcolwise(mean))
